@@ -40,9 +40,9 @@ def Spawn():
     :return: List
     '''
     MobAA = AA(4)
-    SpawnedMobs.append(MobAA)
+    MobList.append(MobAA)
     print('Mob Spawned. Current Mobs:')
-    print(SpawnedMobs)
+    print(MobList)
         
 
 #Why is the move*2?
@@ -111,7 +111,7 @@ def Main():
             #Needs to be before Proj.movement to be split over tick
             
         #Mob/Projectile Movements/Interactions
-        for x in SpawnedMobs:
+        for x in MobList:
             x.Movement()                    #Provides new position of Mob/Proj           
             for y in ProjList:
                 y.ProjMovement()

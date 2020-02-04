@@ -5,7 +5,7 @@ import random, pygame
 from LoadedAssets import *
 
 #List of Mob Subclasses
-SpawnedMobs = []
+MobList = []
 
 class Mob():
      

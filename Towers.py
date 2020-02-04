@@ -1,6 +1,6 @@
 #Tower Class
 
-import pygame, random
+import pygame, random, math
 from pygame.locals import *
 from LoadedAssets import *
 import Mobs
@@ -22,7 +22,7 @@ class Tower():
         self.BlueCentre = (0,0)
         self.BlueSurf = pygame.Surface((0,0)) 
         self.TowerSurf = pygame.Surface((0,0))
-        self.range = 500                        #Change w/Tower subclass
+        self.range = 300                        #Change w/Tower subclass
         #self.ProjType
         
     def ToggleBlue(self):
@@ -90,15 +90,67 @@ class Tower():
                                 ( self.y - (self.BlueSurf.get_height())/2)  )
         else: pass
         
-
-
-
-
-
     def Detect(self):
         '''
-        Checks if Mobs in MobList are within Tower Range
-        pass
+        Checks if Mobs in MobList are within Tower Range, depending on
+        Tower pos to Mob pos, checks 1 point on the mob to determine
+        if in range
+        :return: bool
+        '''
+        #This chooses which part of mob to calculate distance on
+        #If tower.x is within mob.x then distance is mapped to distance
+        #between self.y and mob.y
+        #Else Tower distance based on distance to corners
+        for mob in Mobs.MobList:
+            a = mob.surf.get_width()
+            b = mob.surf.get_height()
+
+            #Top side of Hitbox:
+            if self.y <= mob.CentY - a/2:
+                #TopRight
+                if self.x >= mob.CentX + a/2:
+                    dis1 =(abs(self.x -(mob.CentX + a/2)))**2+\
+                          (abs(self.y -(mob.CentY - b/2)))**2
+                    dis = math.sqrt(dis1)
+                #TopMiddle
+                if mob.CentX - a/2 < self.x < mob.CentX +\
+                   mob.surf.get_width()/2:
+                    dis = abs(self.y -(mob.CentY - b/2))
+                #TopLeft
+                if self.x <= mob.CentX - a/2:
+                    dis2 = (abs(self.x - a/2))**2+\
+                           (abs(self.y - b/2))**2
+                    dis = math.sqrt(dis2)
+            #Bottom Side of Hitbox:
+            if self.y >= mob.CentY + b/2:
+                #BotRight
+                if self.x >= mob.CentX + a/2:
+                    dis3 =(abs(mob.CentX + a/2-(self.x)))**2+\
+                          (abs(self.y -(mob.CentY + b/2)))**2
+                    dis = math.sqrt(dis3)
+                #BotMiddle
+                if mob.CentX + a/2 > self.x > mob.CentX - a/2:
+                    dis = abs(self.y-(mob.CentY + b/2))
+                #BotLeft
+                if self.x < mob.CentX - a/2:
+                    dis4=(abs(mob.CentX - a/2-(self.x)))**2+\
+                         (abs(self.y -(mob.CentY + b/2)))**2
+                    dis = math.sqrt(dis4)
+            #Middle Left/Right of Hitbox:
+            if mob.CentY + mob.surf.get_height()/2 > self.y > mob.CentY \
+               - mob.surf.get_height()/2:
+                if self.x >= mob.CentX:
+                    dis = abs(self.x - (mob.CentX + mob.surf.get_width()/2))
+                if self.x < mob.CentY:
+                    dis = abs(self.x - (mob.CentX - mob.surf.get_width()/2))
+            
+            if dis == 0:
+                print('on point')
+            if dis <= self.range:
+                print('woo, IN RANGE')
+                    self.Shoot()
+        
+                    
         
     
 
@@ -119,6 +171,7 @@ class ceb(Tower):
         Tower.__init__(self)
         self.image = 0
 
+    #Simple Shoot
     def Shoot(self):
         print(Projectiles.ProjList)
         Projectiles.ProjList.append('3')
@@ -180,7 +233,6 @@ class jerax(Tower):
 #Depending on TowerSurf type, different Proj
     #Dependent on i.image 
              
-
 
 
 
