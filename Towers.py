@@ -148,7 +148,7 @@ class Tower():
                 print('on point')
             if dis <= self.range:
                 print('woo, IN RANGE')
-                    self.Shoot()
+                self.Shoot()
         
                     
         
