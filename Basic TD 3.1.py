@@ -53,7 +53,8 @@ def Spawn():
 def Main():
     run = True
     t = 0
-    print(pygame.time.get_ticks)
+    print('start')
+    print(pygame.time.get_ticks())
     while run:
         clock.tick(30)
         screen.blit(bg1, (0,0))                 #Erasing Screen
@@ -63,7 +64,7 @@ def Main():
         if t%60 == 0:
             Spawn()
         print('before tower')
-        print(pygame.time.get_ticks)
+        print(pygame.time.get_ticks())
         #User Input/Events
         for i in Towers:
             for event in pygame.event.get():
@@ -106,12 +107,12 @@ def Main():
             i.IsBlue()
             screen.blit(i.BlueSurf,(i.BlueCentre))#Draws Blueprints on mouse
             screen.blits(PlacedTowers)            #Draws Towers from PlacedTowers
-        print(pygame.time.get_ticks)
+        print(pygame.time.get_ticks())
         #Checking for Mobs in Tower's range:
         for x in SpawnPoints:
             x.Detect()
             #Needs to be before Proj.movement to be split over tick
-        print(pygame.time.get_ticks)    
+        print(pygame.time.get_ticks())    
         #Mob/Projectile Movements/Interactions
         for x in MobList:
             x.Movement()                    #Provides new position of Mob/Proj           
@@ -123,7 +124,7 @@ def Main():
                                                 #Draws Mobs/Projs     
                 screen.blit(y.surf,(y.rect))
             screen.blit(x.surf,(x.rect))
-        print(pygame.time.get_ticks)
+        print(pygame.time.get_ticks())
          
    
         t += 1

@@ -174,8 +174,8 @@ class ceb(Tower):
     #Simple Shoot
     def Shoot(self):
         print(Projectiles.ProjList)
-        Projectiles.ProjList.append('3')
-        print(Projectiles.ProjList)
+        #Projectiles.ProjList.append('3')
+        #print(Projectiles.ProjList)
 
 class ana(Tower):
 
